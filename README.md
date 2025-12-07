@@ -75,3 +75,23 @@ make test
 
 # 4. Start the local server
 make run-local
+# Autonomous Data Analyst Agent (ADAA)
+
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![AWS](https://img.shields.io/badge/cloud-AWS-orange)
+
+## 📖 Project Overview
+The **Autonomous Data Analyst Agent (ADAA)** is a secure, retrieval-augmented generation (RAG) system deployed on AWS.
+
+## 🏗 Architecture
+* **Orchestration:** `LangGraph`
+* **LLM Backend:** `AWS Bedrock` (Claude 3.5 Sonnet)
+* **Data Warehouse:** `AWS Redshift`
+* **Infrastructure:** `Terraform`
+
+## 🚀 Getting Started
+```bash
+make install
+make test
+```
