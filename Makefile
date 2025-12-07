@@ -13,4 +13,5 @@ format:
 	black src/
 
 run:
-	python src/main.py
+	python -m src.main
+
