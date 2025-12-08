@@ -1,24 +1,28 @@
-import boto3
-from src.core.config import settings
+from langchain_core.messages import HumanMessage
+from src.agents.analyst_agent import app
 
-def test_connection():
-    print(f"📡 Connecting to AWS Bedrock ({settings.aws_region})...")
-
-    client = boto3.client(
-        "bedrock-runtime", 
-        region_name=settings.aws_region
-    )
-
-    payload = '{"anthropic_version": "bedrock-2023-05-31", "max_tokens": 100, "messages": [{"role": "user", "content": "Hello! Are you online?"}]}'
-
-    try:
-        response = client.invoke_model(
-            modelId=settings.model_id,
-            body=payload
-        )
-        print("✅ Success! AWS Bedrock responded.")
-    except Exception as e:
-        print(f"❌ Error: {e}")
+def run_chat():
+    print("💬 Starting Autonomous Analyst Chat (Type 'quit' to exit)")
+    print("-" * 50)
+    
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ["quit", "exit"]:
+            print("👋 Goodbye!")
+            break
+            
+        # 1. Create the initial state (The user's message)
+        initial_state = {"messages": [HumanMessage(content=user_input)]}
+        
+        # 2. Run the Graph!
+        # The graph will process the state through the nodes we defined.
+        result = app.invoke(initial_state)
+        
+        # 3. Extract the last message (The AI's response)
+        ai_response = result["messages"][-1].content
+        
+        print(f"AI: {ai_response}")
+        print("-" * 50)
 
 if __name__ == "__main__":
-    test_connection()
+    run_chat()
