@@ -98,7 +98,7 @@ workflow.add_conditional_edges(
 
 # The Loop Back
 # After the tool runs, give the data back to the agent so it can answer the user
-workflow.add_edge("tools", END)
+workflow.add_edge("tools", "agent")
 
 # Compile the graph into a runnable application
 app = workflow.compile()
