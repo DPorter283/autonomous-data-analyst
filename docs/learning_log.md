@@ -46,3 +46,21 @@ The Senior Way: Coding in Linux (WSL), isolating dependencies (venv), and automa
     - Why? LLMs are "prediction engines", not "truth engines." Without a persona, they default to being helpful creative writers. By forcing the persona, you constrain the "Latent Space" to professional, factual answers. This is critical for SQL generation.
 
 5. ![alt text](image-3.png)
+
+cat <<EOT >> docs/learning_log.md
+
+# 📝 Day 3 Review: Tool Use & Debugging
+
+### 1. The Core Concept: Function Calling
+We successfully taught the LLM to use "Tools" instead of just chatting.
+* **Mechanism:** The LLM generates a JSON payload (e.g., \`{"tool": "sql", "query": "SELECT..."}\`).
+* **Execution:** LangGraph intercepts this, runs the Python function, and feeds the result back.
+
+### 2. Critical Bugs Solved
+* **AWS Access Denied:** Fixed by using \`load_dotenv()\` to export variables for Boto3.
+* **Pydantic Validation:** Fixed by adding \`extra = "ignore"\` to the Config class.
+* **Logic Errors:** The LLM hallucinates column names (e.g., "revenue" vs "amount"). We updated the tool to be case-insensitive and flexible.
+
+### 3. The "Loop"
+We confirmed that the graph must have an edge returning from \`tools\` back to \`agent\` so the AI can interpret the raw data for the user.
+EOT
